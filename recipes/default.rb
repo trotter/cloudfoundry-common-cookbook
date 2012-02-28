@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: cloudfoundry_common
+# Cookbook Name:: cloudfoundry-common
 # Recipe:: default
 #
 # Copyright 2012, Trotter Cashion
