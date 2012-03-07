@@ -18,3 +18,4 @@
 #
 
 include_recipe "apt"
+include_recipe "ruby_1_9_2"
