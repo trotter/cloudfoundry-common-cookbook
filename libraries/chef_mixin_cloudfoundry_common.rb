@@ -6,8 +6,10 @@ class Chef
       end
 
       def ruby_bin_path(version)
-        File.join(rbenv_root, "versions", version, "bin")
+        File.join(node[:rbenv][:system_prefix], "rbenv", "versions", version, "bin")
       end
     end
   end
 end
+
+Chef::Resource::Template.send(:include, Chef::Mixin::CloudfoundryCommon)
