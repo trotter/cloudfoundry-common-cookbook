@@ -23,6 +23,7 @@ default[:cloudfoundry_common][:resources_dir] = "/var/vcap/shared/resources"
 default[:cloudfoundry_common][:staging_manifests_dir] = "/var/vcap/shared/staging_manifests"
 default[:cloudfoundry_common][:staging_cache_dir] = "/var/vcap/data/cloud_controller/staging"
 default[:cloudfoundry_common][:tmpdir] = "/var/vcap/data/cloud_controller/tmp"
+default[:cloudfoundry_common][:platform_cache_dir] = "/var/vcap/data/platform/cache"
 
 default[:cloudfoundry_common][:nats_server][:host] = "localhost"
 
