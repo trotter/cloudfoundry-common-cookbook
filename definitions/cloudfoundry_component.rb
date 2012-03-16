@@ -1,7 +1,6 @@
 define :cloudfoundry_component do
   include_recipe "bluepill"
   include_recipe "cloudfoundry-common"
-  include_recipe "cloudfoundry-common::directories"
   include_recipe "cloudfoundry-common::vcap"
 
   component_name = "cloudfoundry-#{params[:name]}"
@@ -10,9 +9,11 @@ define :cloudfoundry_component do
   config_file  = params[:config_file] || File.join(node.cloudfoundry_common.config_dir, "#{params[:name]}.yml")
   bin_file     = params[:bin_file] || File.join(node.cloudfoundry_common.vcap.install_path, "bin", params[:name])
   install_path = params[:install_path] || File.join(node.cloudfoundry_common.vcap.install_path, params[:name])
+  pid_file     = params[:pid_file] || File.join(node["cloudfoundry_#{params[:name]}"].pid_file)
 
-  # TODO (trotter): Complain when pid_file is nil
-  pid_file    = params[:pid_file]
+  rbenv_gem "bundler" do
+    ruby_version node.cloudfoundry_common.ruby_1_9_2_version
+  end
 
   bash "install #{component_name} gems" do
     user node.cloudfoundry_common.user
