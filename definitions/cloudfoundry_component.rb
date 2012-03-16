@@ -19,8 +19,6 @@ define :cloudfoundry_component do
     user node.cloudfoundry_common.user
     cwd  install_path
     code "#{File.join(ruby_path, "bundle")} install --without=test --local"
-    subscribes :run, resources(:git => node.cloudfoundry_common.vcap.install_path)
-    action :nothing
   end
 
   template config_file do
