@@ -18,4 +18,5 @@
 #
 
 include_recipe "apt"
+include_recipe "cloudfoundry-common::directories"
 include_recipe "cloudfoundry-common::ruby_1_9_2"
