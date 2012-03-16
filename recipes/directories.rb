@@ -51,3 +51,9 @@ directory node[:cloudfoundry_common][:platform_cache_dir] do
   owner node[:cloudfoundry_common][:user]
   mode  '0755'
 end
+
+directory node[:cloudfoundry_common][:services_dir] do
+  recursive true
+  owner node[:cloudfoundry_common][:user]
+  mode  '0755'
+end

@@ -50,6 +50,9 @@ default[:cloudfoundry_common][:tmpdir] = "/var/vcap/data/cloud_controller/tmp"
 # TODO (trotter): Find out what this does.
 default[:cloudfoundry_common][:platform_cache_dir] = "/var/vcap/data/platform/cache"
 
+# TODO (trotter): Find out what this does.
+default[:cloudfoundry_common][:services_dir] = "/var/vcap/services"
+
 # Host of the Nats Server that all CloudFoundry components will use for
 # messaging.
 default[:cloudfoundry_common][:nats_server][:host] = "localhost"
@@ -63,3 +66,6 @@ default[:cloudfoundry_common][:log_dir]    = "/var/log/cloudfoundry"
 # Where  to write pid files for all CloudFoundry components.
 default[:cloudfoundry_common][:pid_dir]    = "/var/run/cloudfoundry"
 
+# The token to use to authenticate services to cloudfoundry. This _may_
+# not be safe to change.
+default[:cloudfoundry_common][:service_token] = "0xdeadbeef"
