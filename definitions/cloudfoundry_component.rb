@@ -29,8 +29,10 @@ define :cloudfoundry_component do
   end
 
   template File.join(node.bluepill.conf_dir, "#{component_name}.pill") do
-    source "#{component_name}.pill.erb"
+    cookbook "cloudfoundry-common"
+    source "cloudfoundry_component.pill.erb"
     variables(
+      :component_name => component_name,
       :path        => ruby_path,
       :binary      => "#{File.join(ruby_path, "ruby")} #{bin_file}",
       :pid_file    => pid_file,
