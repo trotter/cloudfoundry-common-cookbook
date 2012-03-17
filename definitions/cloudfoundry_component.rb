@@ -25,7 +25,7 @@ define :cloudfoundry_component do
     source   "#{params[:name]}-config.yml.erb"
     owner    node.cloudfoundry_common.user
     mode     "0644"
-    notifies :load, "bluepill_service[#{component_name}]"
+    notifies :restart, "bluepill_service[#{component_name}]"
   end
 
   template File.join(node.bluepill.conf_dir, "#{component_name}.pill") do
@@ -38,7 +38,7 @@ define :cloudfoundry_component do
       :pid_file    => pid_file,
       :config_file => config_file
     )
-    notifies :load, "bluepill_service[#{component_name}]"
+    notifies [:load, :restart], "bluepill_service[#{component_name}]"
   end
 
   bluepill_service component_name do
