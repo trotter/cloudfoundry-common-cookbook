@@ -38,7 +38,7 @@ define :cloudfoundry_component do
       :pid_file    => pid_file,
       :config_file => config_file
     )
-    notifies [:load, :restart], "bluepill_service[#{component_name}]"
+    notifies :reload, "bluepill_service[#{component_name}]"
   end
 
   bluepill_service component_name do
