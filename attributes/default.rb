@@ -12,7 +12,7 @@ default[:cloudfoundry_common][:vcap][:repo]         = "https://github.com/cloudf
 
 # Git reference to use when fetching the CloudFoundry code. Can be
 # either a specific sha or a reference such as `HEAD` or `master`.
-default[:cloudfoundry_common][:vcap][:reference]    = "e6378a1d7987557cb9316e73124db37e1a3268c8"
+default[:cloudfoundry_common][:vcap][:reference]    = "d92cfbb64e3974e64ef71630997f447825830729"
 
 # local_route is the IP address of a well known server on your network, it
 # is used to choose the right ip address (think of hosts that have multiple nics
