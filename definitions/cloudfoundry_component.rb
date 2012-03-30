@@ -1,5 +1,6 @@
 define :cloudfoundry_component do
   include_recipe "bluepill"
+  include_recipe "logrotate"
   include_recipe "cloudfoundry-common"
   include_recipe "cloudfoundry-common::vcap"
 
@@ -10,6 +11,7 @@ define :cloudfoundry_component do
   bin_file     = params[:bin_file] || File.join(node.cloudfoundry_common.vcap.install_path, "bin", params[:name])
   install_path = params[:install_path] || File.join(node.cloudfoundry_common.vcap.install_path, params[:name])
   pid_file     = params[:pid_file] || File.join(node["cloudfoundry_#{params[:name]}"].pid_file)
+  log_file     = params[:log_file] || File.join(node["cloudfoundry_#{params[:name]}"].log_file)
 
   rbenv_gem "bundler" do
     ruby_version node.cloudfoundry_common.ruby_1_9_2_version
@@ -43,5 +45,13 @@ define :cloudfoundry_component do
 
   bluepill_service component_name do
     action [:enable, :load, :start]
+  end
+
+  logrotate_app component_name do
+    cookbook "logrotate"
+    path log_file
+    frequency daily
+    rotate 30
+    create "644 root root"
   end
 end

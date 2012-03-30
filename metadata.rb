@@ -9,6 +9,6 @@ version          "0.0.1"
   supports os
 end
 
-%w{ apt rbenv }.each do |cb|
+%w{ apt rbenv logrotate }.each do |cb|
   depends cb
 end
