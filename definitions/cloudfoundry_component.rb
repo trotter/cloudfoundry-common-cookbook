@@ -4,7 +4,7 @@ define :cloudfoundry_component do
   include_recipe "cloudfoundry-common"
   include_recipe "cloudfoundry-common::vcap"
 
-  component_name = "cloudfoundry-#{params[:name]}"
+  component_name = params[:component_name] || "cloudfoundry-#{params[:name]}"
 
   ruby_path    = File.join(rbenv_root, "versions", node.cloudfoundry_common.ruby_1_9_2_version, "bin")
   config_file  = params[:config_file] || File.join(node.cloudfoundry_common.config_dir, "#{params[:name]}.yml")
@@ -12,6 +12,7 @@ define :cloudfoundry_component do
   install_path = params[:install_path] || File.join(node.cloudfoundry_common.vcap.install_path, params[:name])
   pid_file     = params[:pid_file] || File.join(node["cloudfoundry_#{params[:name]}"].pid_file)
   log_file     = params[:log_file] || File.join(node["cloudfoundry_#{params[:name]}"].log_file)
+  binary       = params[:binary]   || "#{File.join(ruby_path, "ruby")} #{bin_file}"
 
   rbenv_gem "bundler" do
     ruby_version node.cloudfoundry_common.ruby_1_9_2_version
@@ -21,6 +22,7 @@ define :cloudfoundry_component do
     user node.cloudfoundry_common.user
     cwd  install_path
     code "#{File.join(ruby_path, "bundle")} install --without=test --local"
+    only_if { File.exist?(install_path) }
   end
 
   template config_file do
@@ -36,7 +38,7 @@ define :cloudfoundry_component do
     variables(
       :component_name => component_name,
       :path        => ruby_path,
-      :binary      => "#{File.join(ruby_path, "ruby")} #{bin_file}",
+      :binary      => binary,
       :pid_file    => pid_file,
       :config_file => config_file
     )
