@@ -29,24 +29,28 @@ define :cloudfoundry_component do
     source   "#{params[:name]}-config.yml.erb"
     owner    node.cloudfoundry_common.user
     mode     "0644"
-    notifies :restart, "bluepill_service[#{component_name}]"
+    notifies :restart, "service[#{component_name}]"
   end
 
-  template File.join(node.bluepill.conf_dir, "#{component_name}.pill") do
+  template "/etc/init/#{component_name}.conf" do
     cookbook "cloudfoundry-common"
-    source "cloudfoundry_component.pill.erb"
+    source   "upstart.conf.erb"
     variables(
       :component_name => component_name,
       :path        => ruby_path,
       :binary      => binary,
-      :pid_file    => pid_file,
       :config_file => config_file
     )
-    notifies :reload, "bluepill_service[#{component_name}]"
+    notifies :restart, "service[#{component_name}]"
   end
 
-  bluepill_service component_name do
-    action [:enable, :load, :start]
+  link "/etc/init.d/#{component_name}" do
+    to "/lib/init/upstart-job"
+  end
+
+  service component_name do
+    supports :status => true, :restart => true
+    action [:enable, :start]
   end
 
   logrotate_app component_name do
