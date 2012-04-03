@@ -1,5 +1,4 @@
 define :cloudfoundry_component do
-  include_recipe "bluepill"
   include_recipe "logrotate"
   include_recipe "cloudfoundry-common"
   include_recipe "cloudfoundry-common::vcap"
